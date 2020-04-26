@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { CardList } from './Components/Card-List/Card-List.component'
+import { SearchBox } from './Components/Search-Box/Search-Box.component'
 
 import './App.css';
 
@@ -22,18 +23,26 @@ class App extends React.Component {
 
   }
 
+   handleChange = e => {
+    this.setState( { searchTerm: e.target.value } )
+  }
+
   render() {
+    const { monsters, searchTerm } = this.state
+
+    const filteredMonsters = monsters.filter(monster => (
+      monster.name.toLowerCase().includes(searchTerm.toLowerCase())
+    ))
+
     return (
       <div className = 'App'>
-      <h1>Monsters Rolodex</h1>
-      <input
-        type = "search"
-        placeholder = 'Search Monsters'
-        onChange = { e => this.setState( { searchTerm: e.target.value } ) }
+        <h1>Monsters Rolodex</h1>
 
-        />
-
-      <CardList monsters = { this.state.monsters }/>
+        <SearchBox
+          placeholder = 'Search Monsters'
+          handleChange = { this.handleChange }
+          />
+        <CardList monsters = { filteredMonsters }/>
 
       </div>
     )
@@ -41,3 +50,4 @@ class App extends React.Component {
 }
 
 export default App
+//comment to fix commit message
