@@ -9,15 +9,16 @@ class App extends React.Component {
     super()
 
     this.state = {
-      monsters: []
+      monsters: [],
+      searchTerm: ''
     }
   }
 
 
   componentDidMount() {
       fetch('https://jsonplaceholder.typicode.com/users')
-        .then(response => response.json())
-        .then(users => this.setState({monsters: users}))
+        .then( response => response.json() )
+        .then( users => this.setState( {monsters: users } ) )
 
   }
 
@@ -25,8 +26,14 @@ class App extends React.Component {
     return (
       <div className = 'App'>
       <h1>Monsters Rolodex</h1>
+      <input
+        type = "search"
+        placeholder = 'Search Monsters'
+        onChange = { e => this.setState( { searchTerm: e.target.value } ) }
 
-      <CardList monsters = {this.state.monsters}/>
+        />
+
+      <CardList monsters = { this.state.monsters }/>
 
       </div>
     )
